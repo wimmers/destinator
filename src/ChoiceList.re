@@ -50,7 +50,7 @@ let make = (_children) => {
     self.state.weissbier?
     (<div>
     <h2> (Util.str("Weissbier")) </h2>
-    <img src="/Users/expert239/Desktop/JSlearning/destinator-master/src/weissbier.png"/>
+    <img src="./src/weissbier.png"/>
     <br/>
       <button onClick=(_event => self.send(UltimateWeissbier))>
       <h2>
