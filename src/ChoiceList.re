@@ -6,7 +6,6 @@ type state = {
   input: string,
 };
 
-let changeThisBoolPlease = asd => !asd;
 
 
 /* Action declaration */
@@ -39,14 +38,13 @@ let make = (_children) => {
       } : ReasonReact.Update({...state, label: None})
     | UpdateInput(s) => ReasonReact.Update({...state, input: s})
     | Weissbier => ReasonReact.Update({...state, labels: ["Weissbier", ...state.labels]})
-    | UltimateWeissbier => ReasonReact.Update({...state, weissbier: changeThisBoolPlease(state.weissbier)})
+    | UltimateWeissbier => ReasonReact.Update({...state, weissbier: !(state.weissbier)})
     },
 
   render: self => {
     let new_label = self.state.input;
     let message =
       "Add";
-    let destinatorstring = "Destinator";
     self.state.weissbier?
     (<div>
     <h2> (Util.str("Weissbier")) </h2>
@@ -61,7 +59,7 @@ let make = (_children) => {
     :
     (<div>
     
-    <h2> (Util.str(destinatorstring)) </h2>
+    <h2> (Util.str("Destinator")) </h2>
     <input
     _type="text"
     rows=1
