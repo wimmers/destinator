@@ -16,12 +16,12 @@ type action =
   | UltimateWeissbier
   | UpdateInput(string);
 
-/* Component template declaration.
-   Needs to be **after** state and action declarations! */
 let component = ReasonReact.reducerComponent("Example");
 
-/* greeting and children are props. `children` isn't used, therefore ignored.
-   We ignore it by prepending it with an underscore */
+let s_special = Js.String.fromCodePoint(0x00df);
+
+let weissbier_lit = "Wei" ++ s_special ++ "bier";
+
 let make = (_children) => {
   /* spread the other default fields of component here and override a few */
   ...component,
@@ -37,7 +37,7 @@ let make = (_children) => {
       ReasonReact.Update({...state, label: Some(choice)})
       } : ReasonReact.Update({...state, label: None})
     | UpdateInput(s) => ReasonReact.Update({...state, input: s})
-    | Weissbier => ReasonReact.Update({...state, labels: ["Weissbier", ...state.labels]})
+    | Weissbier => ReasonReact.Update({...state, labels: [weissbier_lit, ...state.labels]})
     | UltimateWeissbier => ReasonReact.Update({...state, weissbier: !(state.weissbier)})
     },
 
@@ -47,7 +47,7 @@ let make = (_children) => {
       "Add";
     self.state.weissbier?
     (<div>
-    <h2> (Util.str("Weissbier")) </h2>
+    <h2> (Util.str(weissbier_lit)) </h2>
     <img src="./src/weissbier.png"/>
     <br/>
       <button onClick=(_event => self.send(UltimateWeissbier))>
@@ -77,7 +77,7 @@ let make = (_children) => {
         (Util.str("Choose"))
       </button>
       <button onClick=(_event => self.send(Weissbier))>
-       (Util.str("Weissbier"))
+       (Util.str(weissbier_lit))
       </button>
 
       <br/>
@@ -85,7 +85,7 @@ let make = (_children) => {
       
         (Util.str("ULTIMATE"))
         <br/>
-       (Util.str("Weissbier"))
+       (Util.str(weissbier_lit))
        
       </button>
       
