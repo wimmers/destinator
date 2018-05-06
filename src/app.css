@@ -1,4 +1,49 @@
+* {
+	color: grey;
+	font-family: "Courier New", Courier, monospace;
+	text-align: center;
+}
+
+body {
+	background-image: url("bier.jpg");
+	background-color: GoldenRod;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
 .default-margin {
     margin-top: 10px;
     margin-bottom: 10px
+}
+
+.page-header {
+	font-size: 5em;
+	border-bottom: solid grey 2px;
+}
+
+.center-block {
+	margin-top: 100px;
+	background-color: rgba(255,255,255,0.5);
+	border: solid white 4px;
+}
+
+.choices {
+	width: 100%;
+	margin: 0;
+}
+
+.input{
+	width: 50%;
+	min-height: 40px;
+	border-radius: 5px;
+	font-size: 18px;
+}
+
+.btn-default {
+	font-size: 18px;
+}
+
+.list-group {
+	font-size: 22px;
+	min-width: 50%;
 }

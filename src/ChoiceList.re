@@ -55,19 +55,22 @@ let make = (_children) => {
     
     <h2 className="page-header"> (Util.str("Destinator")) </h2>
 
-    <div className="container">
+    <div className="container choices">
     <div className="row">
     <input
     _type="text"
     rows=1
     cols=5
+    className="input"
     onChange=(evt => self.send(UpdateInput(Util.valueFromEvent(evt))))
     value=(self.state.input)
   />
   </div>
     
   <div className="btn-group row default-margin" role="group">
-      <button onClick=(_event => self.send(Add(new_label))) className="btn btn-default">
+      <button 
+      onClick=(_event => self.send(Add(new_label))) 
+      className="btn btn-default">
         (Util.str(message))
       </button>
       <button onClick=(_event => self.send(Choose)) className="btn btn-default">
@@ -79,7 +82,7 @@ let make = (_children) => {
   </div>
 
   <div className="row">
-      <button onClick=(_event => self.send(UltimateWeissbier))>
+      <button className="btn btn-default" onClick=(_event => self.send(UltimateWeissbier))>
       
         (Util.str("ULTIMATE"))
         <br/>
