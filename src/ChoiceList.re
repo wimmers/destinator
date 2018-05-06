@@ -1,14 +1,10 @@
-/* State declaration */
 type state = {
   labels: list(string),
-  label: option(string),
+  chosen: option(int),
   weissbier: bool,
   input: string,
 };
 
-
-
-/* Action declaration */
 type action =
   | Add(string)
   | Choose
@@ -23,19 +19,17 @@ let s_special = Js.String.fromCodePoint(0x00df);
 let weissbier_lit = "Wei" ++ s_special ++ "bier";
 
 let make = (_children) => {
-  /* spread the other default fields of component here and override a few */
   ...component,
 
-  initialState: () => {labels: [], label: None, weissbier: false, input: ""},
+  initialState: () => {labels: [], chosen: None, weissbier: false, input: ""},
 
-  /* State transitions */
   reducer: (action, state) =>
     switch (action) {
     | Add(s) => ReasonReact.Update({...state, labels: [s, ...state.labels]})
     | Choose => List.length(state.labels) > 0 ? {
-      let choice = List.nth(state.labels, Util.random_int(List.length(state.labels)));
-      ReasonReact.Update({...state, label: Some(choice)})
-      } : ReasonReact.Update({...state, label: None})
+      let choice = Util.random_int(List.length(state.labels));
+      ReasonReact.Update({...state, chosen: Some(choice)})
+      } : ReasonReact.Update({...state, chosen: None})
     | UpdateInput(s) => ReasonReact.Update({...state, input: s})
     | Weissbier => ReasonReact.Update({...state, labels: [weissbier_lit, ...state.labels]})
     | UltimateWeissbier => ReasonReact.Update({...state, weissbier: !(state.weissbier)})
@@ -60,7 +54,7 @@ let make = (_children) => {
     (<div className="container center-block">
     
     <h2 className="page-header"> (Util.str("Destinator")) </h2>
-    
+
     <div className="container">
     <div className="row">
     <input
@@ -96,30 +90,16 @@ let make = (_children) => {
       </div>
       <ul className="list-group row default-margin">
       (
-      List.map(
-            label =>
-            <li className="list-group-item">(Util.str(label))</li>,
+      List.mapi(
+            (i, label) =>
+            <li className=("list-group-item " ++ ((Some(i) == self.state.chosen)?"active":""))>(Util.str(label))</li>,
             self.state.labels
           )
           |> Array.of_list
-          |> ReasonReact.arrayToElement
+          |> ReasonReact.array
       )
       </ul>
 
-      (
-        switch (self.state.label) {
-        | None => ReasonReact.nullElement
-        | Some(label) => <div> (Util.str("-----------------")) <br/> <br/> (Util.str("You've chosen")) </div>
-        }
-      )
-      <br/>
-      (
-        switch (self.state.label) {
-        | None => ReasonReact.nullElement
-        | Some(label) => <div> <h2> (Util.str(label)) </h2> </div>
-        }
-      )
-      
       </div>
     
     </div>);
