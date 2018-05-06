@@ -57,9 +57,10 @@ let make = (_children) => {
       </button>
     </div>)
     :
-    (<div>
+    (<div className="container center-block">
     
     <h2> (Util.str("Destinator")) </h2>
+    <div className="row">
     <input
     _type="text"
     rows=1
@@ -67,20 +68,21 @@ let make = (_children) => {
     onChange=(evt => self.send(UpdateInput(Util.valueFromEvent(evt))))
     value=(self.state.input)
   />
-
-  <br/>
+  </div>
     
-      <button onClick=(_event => self.send(Add(new_label)))>
+  <div className="btn-group row" role="group">
+      <button onClick=(_event => self.send(Add(new_label))) className="btn btn-default">
         (Util.str(message))
       </button>
-      <button onClick=(_event => self.send(Choose))>
+      <button onClick=(_event => self.send(Choose)) className="btn btn-default">
         (Util.str("Choose"))
       </button>
-      <button onClick=(_event => self.send(Weissbier))>
+      <button onClick=(_event => self.send(Weissbier)) className="btn btn-default">
        (Util.str(weissbier_lit))
       </button>
+  </div>
 
-      <br/>
+  <div className="row">
       <button onClick=(_event => self.send(UltimateWeissbier))>
       
         (Util.str("ULTIMATE"))
@@ -89,17 +91,20 @@ let make = (_children) => {
        
       </button>
       
-      <br/>
-      
+      </div>
+      <div className="row">
+      <ul className="list-group">
       (
       List.map(
             label =>
-            <li>(Util.str(label))</li>,
+            <li className="list-group-item">(Util.str(label))</li>,
             self.state.labels
           )
           |> Array.of_list
           |> ReasonReact.arrayToElement
       )
+      </ul>
+      </div>
       <br/>
       (
         switch (self.state.label) {
