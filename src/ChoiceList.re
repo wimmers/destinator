@@ -69,7 +69,7 @@ let make = (_children) => {
     
   <div className="btn-group row default-margin" role="group">
       <button 
-      onClick=(_event => self.send(Add(new_label))) \
+      onClick=(_event => self.send(Add(new_label))) 
       className="btn btn-default">
         (Util.str(message))
       </button>
