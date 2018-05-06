@@ -2,13 +2,18 @@
 type state = {
   labels: list(string),
   label: option(string),
-  input: string
+  weissbier: bool,
+  input: string,
 };
+
+
 
 /* Action declaration */
 type action =
   | Add(string)
   | Choose
+  | Weissbier
+  | UltimateWeissbier
   | UpdateInput(string);
 
 /* Component template declaration.
@@ -21,7 +26,7 @@ let make = (_children) => {
   /* spread the other default fields of component here and override a few */
   ...component,
 
-  initialState: () => {labels: [], label: None, input: ""},
+  initialState: () => {labels: [], label: None, weissbier: false, input: ""},
 
   /* State transitions */
   reducer: (action, state) =>
@@ -32,13 +37,29 @@ let make = (_children) => {
       ReasonReact.Update({...state, label: Some(choice)})
       } : ReasonReact.Update({...state, label: None})
     | UpdateInput(s) => ReasonReact.Update({...state, input: s})
+    | Weissbier => ReasonReact.Update({...state, labels: ["Weissbier", ...state.labels]})
+    | UltimateWeissbier => ReasonReact.Update({...state, weissbier: !(state.weissbier)})
     },
 
   render: self => {
     let new_label = self.state.input;
     let message =
-      "Add: " ++ new_label;
-    <div>
+      "Add";
+    self.state.weissbier?
+    (<div>
+    <h2> (Util.str("Weissbier")) </h2>
+    <img src="./src/weissbier.png"/>
+    <br/>
+      <button onClick=(_event => self.send(UltimateWeissbier))>
+      <h2>
+        (Util.str("Backtonormal"))
+       </h2>
+      </button>
+    </div>)
+    :
+    (<div>
+    
+    <h2> (Util.str("Destinator")) </h2>
     <input
     _type="text"
     rows=1
@@ -46,27 +67,56 @@ let make = (_children) => {
     onChange=(evt => self.send(UpdateInput(Util.valueFromEvent(evt))))
     value=(self.state.input)
   />
+
+  <br/>
+    
       <button onClick=(_event => self.send(Add(new_label)))>
         (Util.str(message))
       </button>
+      <button onClick=(_event => self.send(Choose))>
+        (Util.str("Choose"))
+      </button>
+      <button onClick=(_event => self.send(Weissbier))>
+       (Util.str("Weissbier"))
+      </button>
+
+      <br/>
+      <button onClick=(_event => self.send(UltimateWeissbier))>
+      
+        (Util.str("ULTIMATE"))
+        <br/>
+       (Util.str("Weissbier"))
+       
+      </button>
+      
+      <br/>
+      
       (
       List.map(
             label =>
-            <div> (Util.str(label)) </div>,
+            <li>(Util.str(label))</li>,
             self.state.labels
           )
           |> Array.of_list
           |> ReasonReact.arrayToElement
       )
-      <button onClick=(_event => self.send(Choose))>
-        (Util.str("Choose"))
-      </button>
+      <br/>
       (
         switch (self.state.label) {
         | None => ReasonReact.nullElement
-        | Some(label) => <div> (Util.str(label)) </div>
+        | Some(label) => <div> (Util.str("-----------------")) <br/> <br/> (Util.str("You've chosen")) </div>
         }
       )
-    </div>;
+      <br/>
+      (
+        switch (self.state.label) {
+        | None => ReasonReact.nullElement
+        | Some(label) => <div> <h2> (Util.str(label)) </h2> </div>
+        }
+      )
+      
+      
+    
+    </div>);
   },
 };
