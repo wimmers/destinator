@@ -59,7 +59,9 @@ let make = (_children) => {
     :
     (<div className="container center-block">
     
-    <h2> (Util.str("Destinator")) </h2>
+    <h2 className="page-header"> (Util.str("Destinator")) </h2>
+    
+    <div className="container">
     <div className="row">
     <input
     _type="text"
@@ -70,7 +72,7 @@ let make = (_children) => {
   />
   </div>
     
-  <div className="btn-group row" role="group">
+  <div className="btn-group row default-margin" role="group">
       <button onClick=(_event => self.send(Add(new_label))) className="btn btn-default">
         (Util.str(message))
       </button>
@@ -92,8 +94,7 @@ let make = (_children) => {
       </button>
       
       </div>
-      <div className="row">
-      <ul className="list-group">
+      <ul className="list-group row default-margin">
       (
       List.map(
             label =>
@@ -104,8 +105,7 @@ let make = (_children) => {
           |> ReasonReact.arrayToElement
       )
       </ul>
-      </div>
-      <br/>
+
       (
         switch (self.state.label) {
         | None => ReasonReact.nullElement
@@ -120,7 +120,7 @@ let make = (_children) => {
         }
       )
       
-      
+      </div>
     
     </div>);
   },
