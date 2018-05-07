@@ -17,7 +17,7 @@ body {
 }
 
 .page-header {
-	font-size: 5em;
+	font-size: 2em;
 	border-bottom: solid grey 2px;
 }
 
@@ -46,4 +46,10 @@ body {
 .list-group {
 	font-size: 22px;
 	min-width: 50%;
+}
+
+@media all and (min-width: 800px) {
+	.page_header{
+		font-size: 4em;
+	}
 }
