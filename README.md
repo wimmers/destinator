@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/wimmers/destinator.svg?branch=master)](https://travis-ci.org/wimmers/destinator)
 
+# [Try it!](https://wimmers.github.io/destinator)
+
 # Build
 
 ## Run Project
