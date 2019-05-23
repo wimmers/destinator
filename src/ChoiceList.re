@@ -28,16 +28,71 @@ let options = [
   "ETC",
 ];
 
-let options_arr =
-  List.mapi((i, s) => {"value": string_of_int(i), "label": s}, options) |> Array.of_list;
-
-let component = ReasonReact.reducerComponent("Example");
-
-let weissbier_lit = {j|Weißbier|j};
+let partyList = [
+  {j|CSU|j},
+  {j|SPD|j},
+  {j|GRÜNE|j},
+  {j|DIE LINKE|j},
+  {j|AfD|j},
+  {j|CSU|j},
+  {j|FDP|j},
+  {j|FREIE WÄHLER|j},
+  {j|PIRATEN|j},
+  {j|Tierschutzpartei|j},
+  {j|NPD|j},
+  {j|FAMILIE|j},
+  {j|ÖDP|j},
+  {j|Die PARTEI|j},
+  {j|Volksabstimmung|j},
+  {j|BP|j},
+  {j|DKP|j},
+  {j|MLPD|j},
+  {j|SGP|j},
+  {j|Bündnis C|j},
+  {j|LKR|j},
+  {j|TIERSCHUTZ hier!|j},
+  {j|Tierschutzallianz|j},
+  {j|BIG|j},
+  {j|BGE|j},
+  {j|DIE DIREKTE!|j},
+  {j|Demoktratie in Europa|j},
+  {j|III. Weg|j},
+  {j|Die Grauen|j},
+  {j|DIE RECHTE|j},
+  {j|DIE VIOLETTEN|j},
+  {j|LIEBE|j},
+  {j|DIE FRAUEN|j},
+  {j|Graue Panther|j}, 
+  {j|MENSCHLICHE WELT|j},
+  {j|NL|j},
+  {j|ÖkoLinX|j},
+  {j|Die Humanisten|j},
+  {j|PARTEI FÜR DIE TIERE|j},
+  {j|Gesundheitsforschung|j},
+  {j|Volt|j},
+];
 
 let blacklist = [
-  "ABC",
-  "Test"
+  {j|afd|j},
+  {j|csu|j},
+  {j|schwarz|j},
+  {j|blau|j},
+  {j|gelb|j},
+  {j|braun|j},
+  {j|CDU|j},
+  {j|FDP|j},
+  {j|FREIE WÄHLER|j},
+  {j|NPD|j},
+  {j|BP|j},
+  {j|dritt|j},
+  {j|III|j},
+  {j|III. Weg|j},
+  {j|Die Rechte|j},
+  {j|recht|j},
+  {j|grau|j},
+  {j|panther|j},
+  {j|LKR|j},
+  {j|Frei|j},
 ];
 
 let bad_choice_texts = [
@@ -46,8 +101,15 @@ let bad_choice_texts = [
   "How about... you try again?"
 ];
 
+let weissbier_lit = {j|Weißbier|j};
+
+let options_arr =
+  List.mapi((i, s) => {"value": string_of_int(i), "label": s}, partyList) |> Array.of_list;
+
+let component = ReasonReact.reducerComponent("Example");
+
 let filter_choices = choices => {
-  let is_blacklisted = x => List.exists(y => y == x, blacklist);
+  let is_blacklisted = x => List.exists(y => String.lowercase(y) == String.lowercase(x), blacklist);
   List.filter(x => !is_blacklisted(x), choices)
 };
 
@@ -123,7 +185,7 @@ let make = (_children) => {
           searchable=false
           clearable=false
           placeholder=(Str("Partei..."))
-          className="input"
+          className="parties"
         />
         </div>
 

@@ -5,8 +5,8 @@
 }
 
 body {
-	background-image: url("bier.jpg");
-	background-color: GoldenRod;
+	background-image: url("destinat.png");
+	background-color: rgba(180, 134, 65, 0.856);
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -37,6 +37,14 @@ body {
 	min-height: 40px;
 	border-radius: 5px;
 	font-size: 18px;
+}
+
+.parties{
+	width: 50%;
+	min-height: 40px;
+	border-radius: 5px;
+	font-size: 18px;
+	display: inline-block;
 }
 
 .btn-default {
