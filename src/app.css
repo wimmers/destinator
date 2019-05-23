@@ -6,7 +6,7 @@
 
 body {
 	background-image: url("destinat.png");
-	background-color: rgba(180, 134, 65, 0.856);
+	background-color: grey(0.856);
 	background-repeat: no-repeat;
 	background-size: cover;
 }
@@ -48,6 +48,7 @@ body {
 }
 
 .btn-default {
+	color: grey;
 	font-size: 18px;
 }
 

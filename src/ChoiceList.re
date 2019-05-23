@@ -7,6 +7,7 @@ type item = {
 };
 
 type state = {
+  text: string,
   labels: list(string),
   chosen: option(int),
   weissbier: bool,
@@ -97,7 +98,10 @@ let blacklist = [
 
 let bad_choice_texts = [
   {j|Trink ein Weißbier und ziehe nicht über los!|j},
-  {j|Wie wär's am Sonntag mit Weißbier trinken?|j},
+  {j|Das war leider nicht ganz richtig!|j}++"\n"++{j|Versuchs nochmal!|j},
+  {j|Versuchs nach einem Weißbier nochmal!|j},
+  {j|Versuchs nach einem Weißbier nochmal!|j},
+  {j|Wie wär's am Sonntag doch mit einem Weißbier?|j},
   "How about... you try again?"
 ];
 
@@ -109,7 +113,17 @@ let options_arr =
 let component = ReasonReact.reducerComponent("Example");
 
 let filter_choices = choices => {
-  let is_blacklisted = x => List.exists(y => String.lowercase(y) == String.lowercase(x), blacklist);
+  let is_blacklisted = x =>
+    List.exists(
+      y =>
+        if (String.length(x) > String.length(y)) {
+          String.lowercase(y)
+          == String.sub(String.lowercase(x), 0, max(String.length(y), 3));
+        } else {
+          String.lowercase(x) == String.sub(String.lowercase(y),0, max(String.length(x), 3));
+        },
+      blacklist,
+  );
   List.filter(x => !is_blacklisted(x), choices)
 };
 
@@ -125,29 +139,29 @@ let choose_from_list = xs => List.nth(xs, Util.random_int(List.length(xs)));
 
 let do_bad_choice: state => state = state => {
   let text = choose_from_list(bad_choice_texts);
-  let labels = [text, weissbier_lit, ...state.labels];
+  let labels = [weissbier_lit];
   let chosen = Some(0);
-  {...state, labels, chosen}
+  {...state, text, labels, chosen}
 };
 
 let do_choice: state => state = state => (List.length(state.labels) > 0 ? {
   let good = filter_choices(state.labels);
   List.length(good) > 0 ?
-    {...state, chosen: Some(choose(state.labels, good))}
+    {...state, text: "Destinator", chosen: Some(choose(state.labels, good))}
   : do_bad_choice(state)  
   } : {...state, chosen: None});
 
 let make = (_children) => {
   ...component,
 
-  initialState: () => {labels: [], chosen: None, weissbier: false, input: "", selected_item: None},
+  initialState: () => {text: "Destinator", labels: [], chosen: None, weissbier: false, input: "", selected_item: None},
 
   reducer: (action, state) =>
     switch (action) {
     | Add(s) =>
       String.length(String.trim(s)) > 0 ? ReasonReact.Update({...state, labels: [s, ...state.labels]}) : ReasonReact.NoUpdate
     | Choose => ReasonReact.Update(do_choice(state))
-    | UpdateInput(s) => ReasonReact.Update({...state, input: s})
+    | UpdateInput(s) => ReasonReact.Update({...state, input: s, text: "Destinator"})
     | Weissbier => ReasonReact.Update({...state, labels: [weissbier_lit, ...state.labels]})
     | UltimateWeissbier => ReasonReact.Update({...state, weissbier: !(state.weissbier)})
     | Select(None) => ReasonReact.Update({...state, selected_item: None})
@@ -160,7 +174,7 @@ let make = (_children) => {
       "Add";
     <div className="container center-block">
     
-      <h2 className="page-header"> (Util.str("Destinator")) </h2>
+      <h2 className="page-header"> (Util.str (self.state.text)) </h2>
  
       <div className="container choices">
         <div className="row">
