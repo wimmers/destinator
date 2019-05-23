@@ -1,0 +1,31 @@
+{
+  "name": "destinator",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack",
+    "webpack:production": "NODE_ENV=production webpack"
+  },
+  "keywords": [
+    "BuckleScript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ahrefs/bs-react-select": "0.0.9",
+    "bs-platform": "^5.0.4",
+    "bs-react-dropdown": "^1.0.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "css-loader": "^2.1.1",
+    "reason-react": "^0.7.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.3.2"
+  }
+}
